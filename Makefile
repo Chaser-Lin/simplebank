@@ -17,4 +17,7 @@ migratedown:
 sqlc:
 	sqlc generate
 
-.PHONY: mysql crearedb dropdb migrateup migrateup sqlc
+test:
+	go test -v -cover ./...
+
+.PHONY: mysql crearedb dropdb migrateup migrateup sqlc test
