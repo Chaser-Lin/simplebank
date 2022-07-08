@@ -1,6 +1,7 @@
 package db
 
 import (
+	"SimpleBank/db/util"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
@@ -18,10 +19,14 @@ var testDB *sql.DB
 
 func TestMain(m *testing.M) {
 	//conn, err := sql.Open(dbDriver, dbSource)
-	var err error
-	testDB, err = sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig("../..")
 	if err != nil {
-		log.Fatal("db connect error: ", err)
+		log.Fatal("cannot load congfig: ", err)
+	}
+
+	testDB, err = sql.Open(config.DBDriver, config.DBSource)
+	if err != nil {
+		log.Fatal("cannot connect to db: ", err)
 	}
 	//testQueries = New(conn)
 	testQueries = New(testDB)

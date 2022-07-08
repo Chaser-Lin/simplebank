@@ -59,8 +59,12 @@ func TestQueries_ListEntries(t *testing.T) {
 }
 
 func TestQueries_GetEntryByAccount(t *testing.T) {
-	var accountId int64 = 5
-	entries, err := testQueries.GetEntryByAccount(context.Background(), accountId)
+	arg := GetEntryByAccountParams{
+		AccountID: util.RandomID(),
+		Limit:     10,
+		Offset:    0,
+	}
+	entries, err := testQueries.GetEntryByAccount(context.Background(), arg)
 	require.NoError(t, err)
 	for _, entry1 := range entries {
 		fmt.Println(entry1)

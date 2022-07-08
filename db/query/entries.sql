@@ -13,7 +13,9 @@ WHERE id = ?;
 
 -- name: GetEntryByAccount :many
 SELECT * FROM entries
-WHERE account_id = ?;
+WHERE account_id = ?
+LIMIT ?
+OFFSET ?;
 
 -- name: ListEntries :many
 SELECT * FROM entries

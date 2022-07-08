@@ -9,5 +9,6 @@ packages:
       emit_prepared_queries: false
       emit_interface: false
       emit_exact_table_names: false
+      emit_empty_slices: true
 # accounts table -> Account struct 用单数的结构体表示数据库中复数的表
 # var account Accounts

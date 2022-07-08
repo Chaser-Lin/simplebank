@@ -11,15 +11,25 @@ INSERT INTO transfers(
 SELECT * FROM transfers
 WHERE id = ?;
 
+-- name: ListTransfers :many
+SELECT * FROM transfers
+ORDER BY id
+LIMIT ?
+OFFSET ?;
+
 -- name: GetTransferByFromAccount :many
 SELECT * FROM transfers
 WHERE from_account_id = ?
-ORDER BY id;
+ORDER BY id
+LIMIT ?
+OFFSET ?;
 
 -- name: GetTransferByFromAccountAndToAccount :many
 SELECT * FROM transfers
 WHERE from_account_id = ? AND to_account_id = ?
-ORDER BY id;
+ORDER BY id
+LIMIT ?
+OFFSET ?;
 
 -- name: UpdateTransfer :exec
 UPDATE transfers

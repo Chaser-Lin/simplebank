@@ -59,15 +59,23 @@ func (q *Queries) GetEntry(ctx context.Context, id int64) (Entry, error) {
 const getEntryByAccount = `-- name: GetEntryByAccount :many
 SELECT id, account_id, amount, created_at FROM entries
 WHERE account_id = ?
+LIMIT ?
+OFFSET ?
 `
 
-func (q *Queries) GetEntryByAccount(ctx context.Context, accountID int64) ([]Entry, error) {
-	rows, err := q.db.QueryContext(ctx, getEntryByAccount, accountID)
+type GetEntryByAccountParams struct {
+	AccountID int64 `json:"account_id"`
+	Limit     int32 `json:"limit"`
+	Offset    int32 `json:"offset"`
+}
+
+func (q *Queries) GetEntryByAccount(ctx context.Context, arg GetEntryByAccountParams) ([]Entry, error) {
+	rows, err := q.db.QueryContext(ctx, getEntryByAccount, arg.AccountID, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Entry
+	items := []Entry{}
 	for rows.Next() {
 		var i Entry
 		if err := rows.Scan(
@@ -125,7 +133,7 @@ func (q *Queries) ListEntries(ctx context.Context, arg ListEntriesParams) ([]Ent
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Entry
+	items := []Entry{}
 	for rows.Next() {
 		var i Entry
 		if err := rows.Scan(

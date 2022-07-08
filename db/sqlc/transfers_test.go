@@ -42,8 +42,12 @@ func TestQueries_GetTransfer(t *testing.T) {
 }
 
 func TestQueries_GetTransferByFromAccount(t *testing.T) {
-	id := util.RandomID()
-	tranfers, err := testQueries.GetTransferByFromAccount(context.Background(), id)
+	arg := GetTransferByFromAccountParams{
+		FromAccountID: util.RandomID(),
+		Limit:         10,
+		Offset:        0,
+	}
+	tranfers, err := testQueries.GetTransferByFromAccount(context.Background(), arg)
 	require.NoError(t, err)
 	for _, tranfer1 := range tranfers {
 		//fmt.Println(tranfer1)
@@ -60,6 +64,8 @@ func TestQueries_GetTransferByFromAccountAndToAccount(t *testing.T) {
 	arg := GetTransferByFromAccountAndToAccountParams{
 		FromAccountID: 1,
 		ToAccountID:   2,
+		Limit:         10,
+		Offset:        0,
 	}
 	tranfers, err := testQueries.GetTransferByFromAccountAndToAccount(context.Background(), arg)
 	require.NoError(t, err)
@@ -72,6 +78,24 @@ func TestQueries_GetTransferByFromAccountAndToAccount(t *testing.T) {
 		require.Equal(t, tranfer1.ToAccountID, tranfer2.ToAccountID)
 		require.Equal(t, tranfer1.Amount, tranfer2.Amount)
 		require.Equal(t, tranfer1.CreatedAt, tranfer2.CreatedAt)
+	}
+}
+
+func TestQueries_ListTransfers(t *testing.T) {
+	arg := ListTransfersParams{
+		Limit:  10,
+		Offset: 0,
+	}
+	transfers, err := testQueries.ListTransfers(context.Background(), arg)
+	require.NoError(t, err)
+	for _, transfer1 := range transfers {
+		transfer2, err := testQueries.GetTransfer(context.Background(), transfer1.ID)
+		require.NoError(t, err)
+		require.Equal(t, transfer1.ID, transfer2.ID)
+		require.Equal(t, transfer1.FromAccountID, transfer2.FromAccountID)
+		require.Equal(t, transfer1.ToAccountID, transfer2.ToAccountID)
+		require.Equal(t, transfer1.Amount, transfer2.Amount)
+		require.Equal(t, transfer1.CreatedAt, transfer2.CreatedAt)
 	}
 }
 

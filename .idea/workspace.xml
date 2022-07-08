@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="80cf9267-cdf5-4309-8686-fe5f1572a540" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/SimpleBank.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SimpleBank.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/query/entries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/query/entries.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/query/transfers.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/query/transfers.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/sqlc/account.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/account.sql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/sqlc/entries.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/entries.sql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/sqlc/entries_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/entries_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/sqlc/main_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/main_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/sqlc/transfers.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/transfers.sql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/sqlc/transfers_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/transfers_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sqlc.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/sqlc.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageOptionsProvider">
+    <option name="myAddOrReplace" value="0" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../GoLand/Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2BToqIKMqzUlNGEhtFfcBjUPoKT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;configurable..is.expanded&quot;: &quot;true&quot;,
+    &quot;configurable.GoLibrariesConfigurable.is.expanded&quot;: &quot;true&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Strengthen&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;go.vgo&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Go_WorkSpace\src\SimpleBank" />
+      <recent name="D:\Go_WorkSpace\src\SimpleBank\db" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.go test SimpleBank/db/sqlc (1)">
+    <configuration name="TestQueries_CreateAccount in SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="SimpleBank" />
+      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <kind value="PACKAGE" />
+      <package value="SimpleBank/db/sqlc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestQueries_CreateAccount\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestQueries_GetTransfer in SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="SimpleBank" />
+      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <kind value="PACKAGE" />
+      <package value="SimpleBank/db/sqlc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestQueries_GetTransfer\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestQueries_ListTransfers in SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="SimpleBank" />
+      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <kind value="PACKAGE" />
+      <package value="SimpleBank/db/sqlc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestQueries_ListTransfers\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test SimpleBank/db/sqlc (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="SimpleBank" />
+      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <kind value="PACKAGE" />
+      <package value="SimpleBank/db/sqlc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="SimpleBank" />
+      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <kind value="PACKAGE" />
+      <package value="SimpleBank/db/sqlc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.go test SimpleBank/db/sqlc (1)" />
+        <item itemvalue="Go Test.TestQueries_ListTransfers in SimpleBank/db/sqlc" />
+        <item itemvalue="Go Test.TestQueries_CreateAccount in SimpleBank/db/sqlc" />
+        <item itemvalue="Go Test.go test SimpleBank/db/sqlc" />
+        <item itemvalue="Go Test.TestQueries_GetTransfer in SimpleBank/db/sqlc" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SimpleBank$TestCreateAccount_in_SimpleBank_db_sqlc.out" NAME="TestCreateAccount in SimpleBank/db/sqlc Coverage Results" MODIFIED="1657085833489" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/SimpleBank$go_test_SimpleBank_db_sqlc.out" NAME="go test SimpleBank/db/sqlc Coverage Results" MODIFIED="1657183595069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
