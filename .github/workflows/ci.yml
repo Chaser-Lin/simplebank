@@ -1,44 +1,44 @@
-name: ci-test
-
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
-jobs:
-
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:8
-        env:
-          MYSQL_USER: root
-          MYSQL_PASSWORD: secret
-          MYSQL_DATABASE: simple_bank
-        ports:
-          - 3306:3306
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.18
-        id: go
-
-      - name: Install golang-migration
-        run: | 
-          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
-          sudo mv migrate.linux-amd64 /usr/bin/migrate
-          which migrate
-
-      - name: Run migration
-        run: make migrateup
-
-      - name: Test
-        run: go test -v ./...
+#name: ci-test
+#
+#on:
+#  push:
+#    branches: [ "master" ]
+#  pull_request:
+#    branches: [ "master" ]
+#
+#jobs:
+#
+#  test:
+#    name: Test
+#    runs-on: ubuntu-latest
+#
+#    services:
+#      mysql:
+#        image: mysql:8
+#        env:
+#          MYSQL_USER: root
+#          MYSQL_PASSWORD: secret
+#          MYSQL_DATABASE: simple_bank
+#        ports:
+#          - 3306:3306
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Set up Go
+#        uses: actions/setup-go@v3
+#        with:
+#          go-version: 1.18
+#        id: go
+#
+#      - name: Install golang-migration
+#        run: |
+#          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
+#          sudo mv migrate.linux-amd64 /usr/bin/migrate
+#          which migrate
+#
+#      - name: Run migration
+#        run: make migrateup
+#
+#      - name: Test
+#        run: go test -v ./...

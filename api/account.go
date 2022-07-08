@@ -24,9 +24,14 @@ func (s *Server) createAccount(ctx *gin.Context) {
 		Balance:  0.00,
 		Currency: req.Currency,
 	}
-	account, err := s.store.CreateAndReturnAccount(ctx, arg)
+	err := s.store.CreateAccount(ctx, arg)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errResponse(err))
+		ctx.JSON(http.StatusInternalServerError, errResponse(err))
+		return
+	}
+	account, err := s.store.GetLastAccount(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errResponse(err))
 		return
 	}
 	ctx.JSON(http.StatusOK, account)
@@ -48,7 +53,7 @@ func (s *Server) getAccount(ctx *gin.Context) {
 			ctx.JSON(http.StatusNotFound, errResponse(err))
 			return
 		}
-		ctx.JSON(http.StatusBadRequest, errResponse(err))
+		ctx.JSON(http.StatusInternalServerError, errResponse(err))
 		return
 	}
 	ctx.JSON(http.StatusOK, account)
@@ -75,7 +80,7 @@ func (s *Server) listAccount(ctx *gin.Context) {
 			ctx.JSON(http.StatusNotFound, errResponse(err))
 			return
 		}
-		ctx.JSON(http.StatusBadRequest, errResponse(err))
+		ctx.JSON(http.StatusInternalServerError, errResponse(err))
 		return
 	}
 	ctx.JSON(http.StatusOK, accounts)
@@ -102,7 +107,7 @@ func (s *Server) updateAccount(ctx *gin.Context) {
 			ctx.JSON(http.StatusNotFound, errResponse(err))
 			return
 		}
-		ctx.JSON(http.StatusBadRequest, errResponse(err))
+		ctx.JSON(http.StatusInternalServerError, errResponse(err))
 		return
 	}
 	ctx.Redirect(http.StatusFound, "/accounts/"+strconv.Itoa(int(arg.ID)))
@@ -121,7 +126,7 @@ func (s *Server) deleteAccount(ctx *gin.Context) {
 	}
 	err := s.store.DeleteAccount(ctx, req.ID)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errResponse(err))
+		ctx.JSON(http.StatusInternalServerError, errResponse(err))
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
