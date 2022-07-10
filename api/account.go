@@ -4,13 +4,14 @@ import (
 	db "SimpleBank/db/sqlc"
 	"database/sql"
 	"github.com/gin-gonic/gin"
+	"github.com/go-sql-driver/mysql"
 	"net/http"
 	"strconv"
 )
 
 type createAccountRequest struct {
 	Owner    string `json:"owner" binding:"required"`
-	Currency string `json:"currency" binding:"required,oneof=USD EUR RMB"`
+	Currency string `json:"currency" binding:"required,currency"`
 }
 
 func (s *Server) createAccount(ctx *gin.Context) {
@@ -26,6 +27,14 @@ func (s *Server) createAccount(ctx *gin.Context) {
 	}
 	err := s.store.CreateAccount(ctx, arg)
 	if err != nil {
+		if mysqlErr, ok := err.(*mysql.MySQLError); ok { //转换为mysql类型的error进一步判断错误类型
+			//log.Println(mysqlErr.Number)
+			switch mysqlErr.Number {
+			case 1062, 1452: //1062:Duplicate (owner, currency), 1452:Unexist owner references to username
+				ctx.JSON(http.StatusForbidden, errResponse(err))
+				return
+			}
+		}
 		ctx.JSON(http.StatusInternalServerError, errResponse(err))
 		return
 	}

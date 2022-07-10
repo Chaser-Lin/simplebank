@@ -18,8 +18,9 @@ import (
 //}
 
 func createRandomAccount(t *testing.T) Account {
+	user := createRandomUser(t)
 	arg := CreateAccountParams{
-		Owner:    util.RandomOwner(),
+		Owner:    user.Username,
 		Balance:  util.RandomBalance(),
 		Currency: util.RandomCurrency(),
 	}
@@ -81,7 +82,7 @@ func TestQueries_UpdateAccount(t *testing.T) {
 }
 
 func TestQueries_DeleteAccount(t *testing.T) {
-	var id int64 = 11
+	var id int64 = 3
 	testQueries.DeleteAccount(context.Background(), id)
 	accout, err := testQueries.GetAccount(context.Background(), id)
 	require.Error(t, err)

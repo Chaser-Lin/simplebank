@@ -16,7 +16,7 @@ import (
 //	return
 //}
 
-func TestQueries_CreateTransfer(t *testing.T) {
+func createRandomTransfer(t *testing.T) Transfer {
 	arg := CreateTransferParams{
 		FromAccountID: util.RandomID(),
 		ToAccountID:   util.RandomID(),
@@ -29,16 +29,22 @@ func TestQueries_CreateTransfer(t *testing.T) {
 	require.Equal(t, transfer.Amount, arg.Amount)
 	require.NotZero(t, transfer.ID)
 	require.NotZero(t, transfer.CreatedAt)
+	return transfer
+}
+
+func TestQueries_CreateTransfer(t *testing.T) {
+	createRandomTransfer(t)
 }
 
 func TestQueries_GetTransfer(t *testing.T) {
-	transfer, err := testQueries.GetTransfer(context.Background(), 1)
+	transfer1 := createRandomTransfer(t)
+	transfer2, err := testQueries.GetTransfer(context.Background(), transfer1.ID)
 	require.NoError(t, err)
-	require.Equal(t, transfer.ID, int64(1))
-	require.Equal(t, transfer.FromAccountID, int64(1))
-	require.Equal(t, transfer.ToAccountID, int64(2))
-	require.Equal(t, transfer.Amount, 10.00)
-	require.NotEmpty(t, transfer.CreatedAt)
+	require.Equal(t, transfer1.ID, transfer1.ID)
+	require.Equal(t, transfer1.FromAccountID, transfer1.FromAccountID)
+	require.Equal(t, transfer1.ToAccountID, transfer1.ToAccountID)
+	require.Equal(t, transfer1.Amount, transfer2.Amount)
+	require.Equal(t, transfer1.CreatedAt, transfer2.CreatedAt)
 }
 
 func TestQueries_GetTransferByFromAccount(t *testing.T) {
@@ -113,7 +119,7 @@ func TestQueries_UpdateTransfer(t *testing.T) {
 }
 
 func TestQueries_DeleteTransfer(t *testing.T) {
-	var id int64 = 11
+	var id int64 = 3
 	err := testQueries.DeleteTransfer(context.Background(), id)
 	require.NoError(t, err)
 	transfer, err := testQueries.GetTransfer(context.Background(), id)

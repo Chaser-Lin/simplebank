@@ -17,27 +17,32 @@ import (
 //	return
 //}
 
-func TestQueries_CreateEntries(t *testing.T) {
+func createRandomEntry(t *testing.T) Entry {
 	arg := CreateEntryParams{
 		AccountID: util.RandomID(),
 		Amount:    util.RandomAmount(),
 	}
-	account, err := testQueries.CreateAndReturnEntry(context.Background(), arg)
+	entry, err := testQueries.CreateAndReturnEntry(context.Background(), arg)
 	require.NoError(t, err)
-	require.Equal(t, account.AccountID, arg.AccountID)
-	require.Equal(t, account.Amount, arg.Amount)
-	require.NotZero(t, account.ID)
-	require.NotZero(t, account.CreatedAt)
+	require.Equal(t, entry.AccountID, arg.AccountID)
+	require.Equal(t, entry.Amount, arg.Amount)
+	require.NotZero(t, entry.ID)
+	require.NotZero(t, entry.CreatedAt)
+	return entry
+}
+
+func TestQueries_CreateEntries(t *testing.T) {
+	createRandomEntry(t)
 }
 
 func TestQueries_GetEntry(t *testing.T) {
-	var id int64 = 1
-	entry, err := testQueries.GetEntry(context.Background(), id)
+	entry1 := createRandomEntry(t)
+	entry2, err := testQueries.GetEntry(context.Background(), entry1.ID)
 	require.NoError(t, err)
-	require.Equal(t, entry.ID, id)
-	require.Equal(t, entry.AccountID, int64(1))
-	require.Equal(t, entry.Amount, float64(-100))
-	require.NotZero(t, entry.CreatedAt)
+	require.Equal(t, entry1.ID, entry2.ID)
+	require.Equal(t, entry1.AccountID, entry2.AccountID)
+	require.Equal(t, entry1.Amount, entry2.Amount)
+	require.Equal(t, entry1.CreatedAt, entry2.CreatedAt)
 }
 
 func TestQueries_ListEntries(t *testing.T) {
@@ -91,7 +96,7 @@ func TestQueries_UpdateEntry(t *testing.T) {
 }
 
 func TestQueries_DeleteEntry(t *testing.T) {
-	var id int64 = 11
+	var id int64 = 3
 	err := testQueries.DeleteEntry(context.Background(), id)
 	require.NoError(t, err)
 	entry, err := testQueries.GetEntry(context.Background(), id)
