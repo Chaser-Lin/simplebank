@@ -59,6 +59,7 @@ func (q *Queries) GetEntry(ctx context.Context, id int64) (Entry, error) {
 const getEntryByAccount = `-- name: GetEntryByAccount :many
 SELECT id, account_id, amount, created_at FROM entries
 WHERE account_id = ?
+ORDER BY id
 LIMIT ?
 OFFSET ?
 `

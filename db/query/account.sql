@@ -11,13 +11,9 @@ INSERT INTO accounts (
 SELECT * FROM accounts
 WHERE id = ? LIMIT 1;
 
--- name: GetAccountForUpdate :one
-SELECT * FROM accounts
-WHERE id = ? LIMIT 1;
--- FOR NO KEY UPDATE;
-
 -- name: ListAccounts :many
 SELECT * FROM accounts
+WHERE owner = ?
 ORDER BY id
 LIMIT ?
 OFFSET ?;

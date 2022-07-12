@@ -11,3 +11,10 @@ var ValidCurrency validator.Func = func(fl validator.FieldLevel) bool {
 	}
 	return false
 }
+
+var ValidBusiness validator.Func = func(fl validator.FieldLevel) bool {
+	if business, ok := fl.Field().Interface().(string); ok {
+		return util.IsSupportedBusiness(business)
+	}
+	return false
+}

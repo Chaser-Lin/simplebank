@@ -14,6 +14,7 @@ WHERE id = ?;
 -- name: GetEntryByAccount :many
 SELECT * FROM entries
 WHERE account_id = ?
+ORDER BY id
 LIMIT ?
 OFFSET ?;
 

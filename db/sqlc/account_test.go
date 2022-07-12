@@ -8,15 +8,6 @@ import (
 	"testing"
 )
 
-//func  (q *Queries) CreateAndReturnAccount(ctx context.Context, arg CreateAccountParams) (result Account, err error) {
-//	err = q.CreateAccount(ctx, arg)
-//	if err != nil {
-//		return
-//	}
-//	result, err = q.GetLastAccount(ctx)
-//	return
-//}
-
 func createRandomAccount(t *testing.T) Account {
 	user := createRandomUser(t)
 	arg := CreateAccountParams{
@@ -25,7 +16,9 @@ func createRandomAccount(t *testing.T) Account {
 		Currency: util.RandomCurrency(),
 	}
 
-	account, err := testQueries.CreateAndReturnAccount(context.Background(), arg)
+	err := testQueries.CreateAccount(context.Background(), arg)
+	require.NoError(t, err)
+	account, err := testQueries.GetLastAccount(context.Background())
 	require.NoError(t, err)
 	require.Equal(t, account.Owner, arg.Owner)
 	require.Equal(t, account.Balance, arg.Balance)
@@ -53,7 +46,7 @@ func TestQueries_GetAccount(t *testing.T) {
 func TestQueries_ListAccounts(t *testing.T) {
 	arg := ListAccountsParams{
 		Limit:  5,
-		Offset: 3,
+		Offset: 0,
 	}
 	accounts, err := testQueries.ListAccounts(context.Background(), arg)
 	require.NoError(t, err)

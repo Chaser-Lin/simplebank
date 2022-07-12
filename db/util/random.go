@@ -36,7 +36,7 @@ func RandomOwner() string {
 }
 
 func RandomCurrency() string {
-	currencies := []string{"USD", "RMB", "EUR"}
+	currencies := []string{"USD", "RMB", "ERU"}
 	n := len(currencies)
 	return currencies[rand.Intn(n)]
 }

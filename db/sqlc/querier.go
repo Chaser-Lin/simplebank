@@ -19,7 +19,6 @@ type Querier interface {
 	DeleteTransfer(ctx context.Context, id int64) error
 	DeleteUser(ctx context.Context, username string) error
 	GetAccount(ctx context.Context, id int64) (Account, error)
-	GetAccountForUpdate(ctx context.Context, id int64) (Account, error)
 	GetEntry(ctx context.Context, id int64) (Entry, error)
 	GetEntryByAccount(ctx context.Context, arg GetEntryByAccountParams) ([]Entry, error)
 	GetLastAccount(ctx context.Context) (Account, error)
@@ -29,7 +28,6 @@ type Querier interface {
 	GetTransferByFromAccount(ctx context.Context, arg GetTransferByFromAccountParams) ([]Transfer, error)
 	GetTransferByFromAccountAndToAccount(ctx context.Context, arg GetTransferByFromAccountAndToAccountParams) ([]Transfer, error)
 	GetUser(ctx context.Context, username string) (User, error)
-	// FOR NO KEY UPDATE;
 	ListAccounts(ctx context.Context, arg ListAccountsParams) ([]Account, error)
 	ListEntries(ctx context.Context, arg ListEntriesParams) ([]Entry, error)
 	ListTransfers(ctx context.Context, arg ListTransfersParams) ([]Transfer, error)
