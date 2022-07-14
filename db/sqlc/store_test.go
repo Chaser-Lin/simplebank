@@ -16,7 +16,7 @@ func TestStore_TransferTx(t *testing.T) {
 	fmt.Println(">> before: ", account1.Balance, account2.Balance)
 
 	n := 5
-	amount := float64(10.00)
+	amount := float64(100.00)
 
 	errs := make(chan error)
 	results := make(chan TransferTxResult)
@@ -85,13 +85,15 @@ func TestStore_TransferTx(t *testing.T) {
 
 		//check accounts' balance diffrence
 		fmt.Println(">> tx: ", fromAccount.Balance, toAccount.Balance)
-		diff1 := account1.Balance - fromAccount.Balance
-		diff2 := toAccount.Balance - account2.Balance
+		diff1 := int(account1.Balance - fromAccount.Balance)
+		diff2 := int(toAccount.Balance - account2.Balance)
+		//fmt.Println(diff1, " ", diff2)
 		require.True(t, diff1 == diff2)
 		require.True(t, diff1 > 0)
 
-		k := int(diff1 / amount)
+		k := diff1 / int(amount)
 		require.True(t, k >= 1 && k <= n)
+		//fmt.Println("k = ", k)
 		require.NotContains(t, existed, k)
 		existed[k] = true
 	}
@@ -153,4 +155,143 @@ func TestStore_TransferTxDeadLock(t *testing.T) {
 	fmt.Println(">> after: ", updateAccount1.Balance, updateAccount2.Balance)
 	require.Equal(t, account1.Balance, updateAccount1.Balance)
 	require.Equal(t, account2.Balance, updateAccount2.Balance)
+}
+
+func TestSQLStore_WithdrawTx(t *testing.T) {
+	store := NewStore(testDB)
+
+	account1 := createRandomAccount(t)
+	fmt.Println(">> before: ", account1.Balance)
+
+	n := 5
+	amount := float64(10.00)
+
+	errs := make(chan error, 5)
+	results := make(chan BusinessTxResult, 5)
+
+	for i := 0; i < n; i++ {
+		go func() {
+			result, err := store.WithdrawTx(context.Background(), BusinessTxParms{
+				AccountID: account1.ID,
+				Amount:    amount,
+			})
+			errs <- err
+			results <- result
+		}()
+	}
+
+	existed := make(map[int]bool)
+
+	m := 0
+	for i := 0; i < n; i++ {
+		result := <-results
+		require.NotEmpty(t, result)
+		err := <-errs
+		if err != nil {
+			require.True(t, result.Account.Balance-amount < 0)
+			break
+		}
+		require.NoError(t, err)
+		m++
+
+		//check Entries
+		entry := result.Entry
+		require.NotEmpty(t, entry)
+		require.Equal(t, entry.AccountID, account1.ID)
+		require.Equal(t, entry.Amount, -amount)
+		require.NotZero(t, entry.ID)
+		require.NotZero(t, entry.CreatedAt)
+
+		_, err = store.GetEntry(context.Background(), entry.ID)
+		require.NoError(t, err)
+
+		//get account
+		account2 := result.Account
+		require.NotEmpty(t, account2)
+		require.Equal(t, account2.ID, account1.ID)
+
+		//check accounts' balance diffrence
+		fmt.Println(">> tx: ", account2.Balance)
+		diff := account1.Balance - account2.Balance
+		require.True(t, diff > 0)
+
+		k := int(diff / amount)
+		require.True(t, k >= 1 && k <= n)
+		require.NotContains(t, existed, k)
+		existed[k] = true
+	}
+	close(errs)
+	close(results)
+	//check the final updated balances
+	updateAccount, err := testQueries.GetAccount(context.Background(), account1.ID)
+	require.NoError(t, err)
+
+	fmt.Println(">> after: ", updateAccount.Balance)
+	require.Equal(t, account1.Balance-float64(m)*amount, updateAccount.Balance)
+}
+
+func TestSQLStore_DepositTx(t *testing.T) {
+	store := NewStore(testDB)
+
+	account1 := createRandomAccount(t)
+	fmt.Println(">> before: ", account1.Balance)
+
+	n := 5
+	amount := float64(10.00)
+
+	errs := make(chan error)
+	results := make(chan BusinessTxResult)
+
+	for i := 0; i < n; i++ {
+		go func() {
+			result, err := store.DepositTx(context.Background(), BusinessTxParms{
+				AccountID: account1.ID,
+				Amount:    amount,
+			})
+			errs <- err
+			results <- result
+		}()
+	}
+
+	existed := make(map[int]bool)
+
+	for i := 0; i < n; i++ {
+		err := <-errs
+		require.NoError(t, err)
+		result := <-results
+		require.NotEmpty(t, result)
+
+		//check Entries
+		entry := result.Entry
+		require.NotEmpty(t, entry)
+		require.Equal(t, entry.AccountID, account1.ID)
+		require.Equal(t, entry.Amount, amount)
+		require.NotZero(t, entry.ID)
+		require.NotZero(t, entry.CreatedAt)
+
+		_, err = store.GetEntry(context.Background(), entry.ID)
+		require.NoError(t, err)
+
+		//get account
+		account2 := result.Account
+		require.NotEmpty(t, account2)
+		require.Equal(t, account2.ID, account1.ID)
+
+		//check accounts' balance diffrence
+		fmt.Println(">> tx: ", account2.Balance)
+		diff := account2.Balance - account1.Balance
+		require.True(t, diff > 0)
+
+		k := int(diff / amount)
+		require.True(t, k >= 1 && k <= n)
+		require.NotContains(t, existed, k)
+		existed[k] = true
+	}
+
+	//check the final updated balances
+	updateAccount, err := testQueries.GetAccount(context.Background(), account1.ID)
+	require.NoError(t, err)
+
+	fmt.Println(">> after: ", updateAccount.Balance)
+	require.Equal(t, account1.Balance+float64(n)*amount, updateAccount.Balance)
 }

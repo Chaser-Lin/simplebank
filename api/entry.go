@@ -9,6 +9,8 @@ import (
 	"net/http"
 )
 
+//var ErrInsufficientBalance = errors.New("account's balance is insufficient")
+
 type newBusinessRequest struct {
 	Business  string  `json:"business" binding:"required,business"` //使用bind，注意定义为包级
 	AccountID int64   `json:"account_id" binding:"required,min=1"`
@@ -21,11 +23,50 @@ func (s Server) NewBusiness(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, errResponse(err))
 		return
 	}
-	if req.Business == "Withdraw" {
-		s.createEntry(ctx, req.AccountID, -req.Amount)
-	} else if req.Business == "Deposit" {
-		s.createEntry(ctx, req.AccountID, req.Amount)
+	account, err := s.store.GetAccount(ctx, req.AccountID)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			ctx.JSON(http.StatusNotFound, errResponse(err))
+			return
+		}
+		ctx.JSON(http.StatusInternalServerError, errResponse(err))
+		return
 	}
+	payload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+
+	var result db.BusinessTxResult
+	if req.Business == "Withdraw" {
+		//s.createEntry(ctx, req.AccountID, -req.Amount)
+		if payload.Username != account.Owner { //取钱需要是号主
+			err := errors.New("account doesn't belong to the authenticated user")
+			ctx.JSON(http.StatusBadRequest, errResponse(err))
+			return
+		}
+
+		result, err = s.store.WithdrawTx(ctx, db.BusinessTxParms{
+			AccountID: req.AccountID,
+			Amount:    req.Amount,
+		})
+		if err != nil {
+			if err == db.ErrInsufficientBalance { //不可以直接比较error对象是否相等
+				ctx.JSON(http.StatusBadRequest, errResponse(err))
+				return
+			}
+			ctx.JSON(http.StatusInternalServerError, errResponse(err))
+			return
+		}
+	} else if req.Business == "Deposit" { //存钱不需要号主
+		//s.createEntry(ctx, req.AccountID, req.Amount)
+		result, err = s.store.DepositTx(ctx, db.BusinessTxParms{
+			AccountID: req.AccountID,
+			Amount:    req.Amount,
+		})
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, errResponse(err))
+			return
+		}
+	}
+	ctx.JSON(http.StatusOK, result)
 }
 
 func (s *Server) createEntry(ctx *gin.Context, accountID int64, amount float64) {

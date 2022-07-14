@@ -3,12 +3,17 @@ package db
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 )
+
+var ErrInsufficientBalance = errors.New("account's balance is insufficient")
 
 type Store interface {
 	Querier
 	TransferTx(ctx context.Context, arg TransferTxParms) (TransferTxResult, error)
+	WithdrawTx(ctx context.Context, arg BusinessTxParms) (BusinessTxResult, error)
+	DepositTx(ctx context.Context, arg BusinessTxParms) (BusinessTxResult, error)
 }
 
 type SQLStore struct {
@@ -88,17 +93,97 @@ func (s *SQLStore) TransferTx(ctx context.Context, arg TransferTxParms) (Transfe
 		}
 
 		if arg.FromAccountID < arg.ToAccountID {
-			result.FromAccount, result.ToAccount, err = addMoney(ctx, q, arg.FromAccountID, -arg.Amount, arg.ToAccountID, arg.Amount)
+			//result.FromAccount, err = addMoney(ctx, q, arg.FromAccountID, -arg.Amount)
+			//if err != nil {
+			//	return
+			//}
+			//result.ToAccount, err = addMoney(ctx, q, arg.ToAccountID, arg.Amount)
+			result.FromAccount, result.ToAccount, err = transferMoney(ctx, q, arg.FromAccountID, -arg.Amount, arg.ToAccountID, arg.Amount)
 		} else {
-			result.ToAccount, result.FromAccount, err = addMoney(ctx, q, arg.ToAccountID, arg.Amount, arg.FromAccountID, -arg.Amount)
+			//result.ToAccount, err = addMoney(ctx, q, arg.ToAccountID, arg.Amount)
+			//if err != nil {
+			//	return
+			//}
+			//result.FromAccount, err = addMoney(ctx, q, arg.FromAccountID, -arg.Amount)
+			result.ToAccount, result.FromAccount, err = transferMoney(ctx, q, arg.ToAccountID, arg.Amount, arg.FromAccountID, -arg.Amount)
 		}
 
-		return nil
+		return
+	})
+	return result, err
+}
+
+type BusinessTxParms struct {
+	AccountID int64   `json:"account_id"`
+	Amount    float64 `json:"amount"`
+}
+
+type BusinessTxResult struct {
+	Entry   Entry   `json:"entry"`
+	Account Account `json:"account"`
+}
+
+func (s *SQLStore) WithdrawTx(ctx context.Context, arg BusinessTxParms) (BusinessTxResult, error) {
+	var result BusinessTxResult
+	err := s.execTx(ctx, func(q *Queries) (err error) {
+		result.Entry, err = q.CreateAndReturnEntry(ctx, CreateEntryParams{
+			AccountID: arg.AccountID,
+			Amount:    -arg.Amount,
+		})
+		if err != nil {
+			return
+		}
+		result.Account, err = addMoney(ctx, q, arg.AccountID, -arg.Amount)
+		return
+	})
+	return result, err
+}
+
+func (s *SQLStore) DepositTx(ctx context.Context, arg BusinessTxParms) (BusinessTxResult, error) {
+	var result BusinessTxResult
+	err := s.execTx(ctx, func(q *Queries) (err error) {
+		result.Entry, err = q.CreateAndReturnEntry(ctx, CreateEntryParams{
+			AccountID: arg.AccountID,
+			Amount:    arg.Amount,
+		})
+		if err != nil {
+			return
+		}
+		result.Account, err = addMoney(ctx, q, arg.AccountID, arg.Amount)
+		return
 	})
 	return result, err
 }
 
 func addMoney(
+	ctx context.Context,
+	q *Queries,
+	accountID int64,
+	amount float64,
+) (account Account, err error) {
+	account, err = q.GetAccount(ctx, accountID)
+	if err != nil {
+		return
+	}
+	err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
+		Amount: amount,
+		ID:     accountID,
+	})
+	if err != nil {
+		return
+	}
+	account, err = q.GetAccount(ctx, accountID)
+	if err != nil {
+		return
+	}
+	//操作之后余额小于0，出错回滚
+	if account.Balance < 0 {
+		err = ErrInsufficientBalance
+	}
+	return
+}
+
+func transferMoney(
 	ctx context.Context,
 	q *Queries,
 	accountID1 int64,
