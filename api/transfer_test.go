@@ -97,7 +97,7 @@ func TestCreateTransferAPI(t *testing.T) {
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusOK, recorder.Code)
-				requireBodyMatchResult(t, recorder.Body, result)
+				requireBodyMatchTransferResult(t, recorder.Body, result)
 			},
 		},
 		{
@@ -262,7 +262,7 @@ func TestCreateTransferAPI(t *testing.T) {
 	}
 }
 
-func requireBodyMatchResult(t *testing.T, body *bytes.Buffer, result db.TransferTxResult) {
+func requireBodyMatchTransferResult(t *testing.T, body *bytes.Buffer, result db.TransferTxResult) {
 	data, err := ioutil.ReadAll(body)
 	require.NoError(t, err)
 
@@ -270,11 +270,5 @@ func requireBodyMatchResult(t *testing.T, body *bytes.Buffer, result db.Transfer
 	err = json.Unmarshal(data, &gotResult)
 	require.NoError(t, err)
 
-	//result.FromEntry.ID = gotResult.FromEntry.ID
-	//result.FromEntry.CreatedAt = gotResult.FromEntry.CreatedAt
-	//result.ToEntry.ID = gotResult.ToEntry.ID
-	//result.ToEntry.CreatedAt = gotResult.ToEntry.CreatedAt
-	//result.Transfer.ID = gotResult.Transfer.ID
-	//result.Transfer.CreatedAt = gotResult.Transfer.CreatedAt
 	require.Equal(t, result, gotResult)
 }

@@ -12,7 +12,7 @@ import (
 //var ErrInsufficientBalance = errors.New("account's balance is insufficient")
 
 type newBusinessRequest struct {
-	Business  string  `json:"business" binding:"required,business"` //使用bind，注意定义为包级
+	Business  string  `json:"business" binding:"required,business"` //使用ShouldBind，注意定义为包级
 	AccountID int64   `json:"account_id" binding:"required,min=1"`
 	Amount    float64 `json:"amount" binding:"required,gt=0"`
 }
@@ -39,7 +39,7 @@ func (s Server) NewBusiness(ctx *gin.Context) {
 		//s.createEntry(ctx, req.AccountID, -req.Amount)
 		if payload.Username != account.Owner { //取钱需要是号主
 			err := errors.New("account doesn't belong to the authenticated user")
-			ctx.JSON(http.StatusBadRequest, errResponse(err))
+			ctx.JSON(http.StatusUnauthorized, errResponse(err))
 			return
 		}
 
@@ -69,43 +69,6 @@ func (s Server) NewBusiness(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
-func (s *Server) createEntry(ctx *gin.Context, accountID int64, amount float64) {
-	account, err := s.store.GetAccount(ctx, accountID)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			ctx.JSON(http.StatusNotFound, errResponse(err))
-			return
-		}
-		ctx.JSON(http.StatusInternalServerError, errResponse(err))
-		return
-	}
-
-	payload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
-	if payload.Username != account.Owner {
-		err := errors.New("account doesn't belong to the authenticated user")
-		ctx.JSON(http.StatusBadRequest, errResponse(err))
-		return
-	}
-
-	err = s.store.CreateEntry(ctx, db.CreateEntryParams{
-		AccountID: accountID,
-		Amount:    amount,
-	})
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, errResponse(err))
-		return
-	}
-
-	entry, err := s.store.GetLastEntry(ctx)
-
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, errResponse(err))
-		return
-	}
-
-	ctx.JSON(http.StatusOK, entry)
-}
-
 type listEntryRequest struct {
 	PageID    int32 `form:"page_id" binding:"required,min=1"`
 	PageSize  int32 `form:"page_size" binding:"required,min=5,max=10"`
@@ -131,7 +94,7 @@ func (s *Server) listEntries(ctx *gin.Context) {
 	payload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
 	if payload.Username != account.Owner {
 		err := errors.New("account doesn't belong to the authenticated user")
-		ctx.JSON(http.StatusBadRequest, errResponse(err))
+		ctx.JSON(http.StatusUnauthorized, errResponse(err))
 		return
 	}
 
@@ -147,3 +110,40 @@ func (s *Server) listEntries(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, entries)
 }
+
+//func (s *Server) createEntry(ctx *gin.Context, accountID int64, amount float64) {
+//	account, err := s.store.GetAccount(ctx, accountID)
+//	if err != nil {
+//		if err == sql.ErrNoRows {
+//			ctx.JSON(http.StatusNotFound, errResponse(err))
+//			return
+//		}
+//		ctx.JSON(http.StatusInternalServerError, errResponse(err))
+//		return
+//	}
+//
+//	payload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+//	if payload.Username != account.Owner {
+//		err := errors.New("account doesn't belong to the authenticated user")
+//		ctx.JSON(http.StatusBadRequest, errResponse(err))
+//		return
+//	}
+//
+//	err = s.store.CreateEntry(ctx, db.CreateEntryParams{
+//		AccountID: accountID,
+//		Amount:    amount,
+//	})
+//	if err != nil {
+//		ctx.JSON(http.StatusInternalServerError, errResponse(err))
+//		return
+//	}
+//
+//	entry, err := s.store.GetLastEntry(ctx)
+//
+//	if err != nil {
+//		ctx.JSON(http.StatusInternalServerError, errResponse(err))
+//		return
+//	}
+//
+//	ctx.JSON(http.StatusOK, entry)
+//}

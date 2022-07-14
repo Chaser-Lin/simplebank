@@ -161,6 +161,21 @@ func (mr *MockStoreMockRecorder) DeleteUser(arg0, arg1 interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUser", reflect.TypeOf((*MockStore)(nil).DeleteUser), arg0, arg1)
 }
 
+// DepositTx mocks base method.
+func (m *MockStore) DepositTx(arg0 context.Context, arg1 db.BusinessTxParms) (db.BusinessTxResult, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DepositTx", arg0, arg1)
+	ret0, _ := ret[0].(db.BusinessTxResult)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DepositTx indicates an expected call of DepositTx.
+func (mr *MockStoreMockRecorder) DepositTx(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DepositTx", reflect.TypeOf((*MockStore)(nil).DepositTx), arg0, arg1)
+}
+
 // GetAccount mocks base method.
 func (m *MockStore) GetAccount(arg0 context.Context, arg1 int64) (db.Account, error) {
 	m.ctrl.T.Helper()
@@ -341,7 +356,7 @@ func (mr *MockStoreMockRecorder) ListEntries(arg0, arg1 interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListEntries", reflect.TypeOf((*MockStore)(nil).ListEntries), arg0, arg1)
 }
 
-// ListTransfers mocks base method.
+// ListTranTxers mocks base method.
 func (m *MockStore) ListTransfers(arg0 context.Context, arg1 db.ListTransfersParams) ([]db.Transfer, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListTransfers", arg0, arg1)
@@ -425,4 +440,19 @@ func (m *MockStore) UpdateUser(arg0 context.Context, arg1 db.UpdateUserParams) e
 func (mr *MockStoreMockRecorder) UpdateUser(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateUser", reflect.TypeOf((*MockStore)(nil).UpdateUser), arg0, arg1)
+}
+
+// WithdrawTx mocks base method.
+func (m *MockStore) WithdrawTx(arg0 context.Context, arg1 db.BusinessTxParms) (db.BusinessTxResult, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "WithdrawTx", arg0, arg1)
+	ret0, _ := ret[0].(db.BusinessTxResult)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// WithdrawTx indicates an expected call of WithdrawTx.
+func (mr *MockStoreMockRecorder) WithdrawTx(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithdrawTx", reflect.TypeOf((*MockStore)(nil).WithdrawTx), arg0, arg1)
 }

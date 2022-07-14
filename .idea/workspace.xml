@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="80cf9267-cdf5-4309-8686-fe5f1572a540" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/account.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/account.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/account_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/account_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/entry.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/transfer_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/transfer_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/mock/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/mock/store.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/account.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/account.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/store.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/store_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/store_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,61 +72,61 @@
       <recent name="D:\Go_WorkSpace\src\SimpleBank\db" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestStore_TransferTx in SimpleBank/db/sqlc">
-    <configuration name="TestSQLStore_DepositTx in SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.go test SimpleBank/api">
+    <configuration name="TestListEntriesAPI/InternalGetAccountServerError in SimpleBank/api" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="SimpleBank" />
-      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <working_directory value="$PROJECT_DIR$/api" />
       <root_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="SimpleBank/db/sqlc" />
+      <package value="SimpleBank/api" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
-      <pattern value="^\QTestSQLStore_DepositTx\E$" />
+      <pattern value="^\QTestListEntriesAPI\E$/^\QInternalGetAccountServerError\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestSQLStore_WithdrawTx in SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestListEntriesAPI/InternalGetEntrierByAccountServerError in SimpleBank/api" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="SimpleBank" />
-      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <working_directory value="$PROJECT_DIR$/api" />
       <root_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="SimpleBank/db/sqlc" />
+      <package value="SimpleBank/api" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
-      <pattern value="^\QTestSQLStore_WithdrawTx\E$" />
+      <pattern value="^\QTestListEntriesAPI\E$/^\QInternalGetEntrierByAccountServerError\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestStore_TransferTx in SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestListEntriesAPI/InvalidAccountID in SimpleBank/api" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="SimpleBank" />
-      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <working_directory value="$PROJECT_DIR$/api" />
       <root_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="SimpleBank/db/sqlc" />
+      <package value="SimpleBank/api" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
-      <pattern value="^\QTestStore_TransferTx\E$" />
+      <pattern value="^\QTestListEntriesAPI\E$/^\QInvalidAccountID\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestStore_TransferTxDeadLock in SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestListEntriesAPI/UnAuthorizedUser in SimpleBank/api" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="SimpleBank" />
-      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <working_directory value="$PROJECT_DIR$/api" />
       <root_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="SimpleBank/db/sqlc" />
+      <package value="SimpleBank/api" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
-      <pattern value="^\QTestStore_TransferTxDeadLock\E$" />
+      <pattern value="^\QTestListEntriesAPI\E$/^\QUnAuthorizedUser\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="go test SimpleBank/db/sqlc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="go test SimpleBank/api" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="SimpleBank" />
-      <working_directory value="$PROJECT_DIR$/db/sqlc" />
+      <working_directory value="$PROJECT_DIR$/api" />
       <root_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="SimpleBank/db/sqlc" />
+      <package value="SimpleBank/api" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
@@ -134,11 +134,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestStore_TransferTx in SimpleBank/db/sqlc" />
-        <item itemvalue="Go Test.TestStore_TransferTxDeadLock in SimpleBank/db/sqlc" />
-        <item itemvalue="Go Test.TestSQLStore_WithdrawTx in SimpleBank/db/sqlc" />
-        <item itemvalue="Go Test.go test SimpleBank/db/sqlc" />
-        <item itemvalue="Go Test.TestSQLStore_DepositTx in SimpleBank/db/sqlc" />
+        <item itemvalue="Go Test.go test SimpleBank/api" />
+        <item itemvalue="Go Test.TestListEntriesAPI/UnAuthorizedUser in SimpleBank/api" />
+        <item itemvalue="Go Test.TestListEntriesAPI/InternalGetEntrierByAccountServerError in SimpleBank/api" />
+        <item itemvalue="Go Test.TestListEntriesAPI/InternalGetAccountServerError in SimpleBank/api" />
+        <item itemvalue="Go Test.TestListEntriesAPI/InvalidAccountID in SimpleBank/api" />
       </list>
     </recent_temporary>
   </component>
@@ -155,10 +155,11 @@
     <settings-migrated>true</settings-migrated>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SimpleBank$TestNewBusinessAPI_in_SimpleBank_api.out" NAME="TestNewBusinessAPI in SimpleBank/api Coverage Results" MODIFIED="1657771196030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SimpleBank$TestLoginUserAPI_in_SimpleBank_api.out" NAME="TestLoginUserAPI in SimpleBank/api Coverage Results" MODIFIED="1657621493020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SimpleBank$TestGetAccountAPI_OK_in_SimpleBank_api.out" NAME="TestGetAccountAPI/OK in SimpleBank/api Coverage Results" MODIFIED="1657291406233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SimpleBank$TestUpdateAccountAPI_UnAuthorizedUser_in_SimpleBank_api.out" NAME="TestUpdateAccountAPI/UnAuthorizedUser in SimpleBank/api Coverage Results" MODIFIED="1657617438153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/SimpleBank$go_test_SimpleBank_api.out" NAME="go test SimpleBank/api Coverage Results" MODIFIED="1657635239300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/SimpleBank$go_test_SimpleBank_api.out" NAME="go test SimpleBank/api Coverage Results" MODIFIED="1657778441173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SimpleBank$TestDeleteAccountAPI_in_SimpleBank_api.out" NAME="TestDeleteAccountAPI in SimpleBank/api Coverage Results" MODIFIED="1657618900697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SimpleBank$go_test_SimpleBank_token.out" NAME="go test SimpleBank/token Coverage Results" MODIFIED="1657436929513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SimpleBank$TestListAccountAPI_in_SimpleBank_api.out" NAME="TestListAccountAPI in SimpleBank/api Coverage Results" MODIFIED="1657620652278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
@@ -170,5 +171,6 @@
     <SUITE FILE_PATH="coverage/SimpleBank$TestCreateAccountAPI_InvalidCurrency_in_SimpleBank_api.out" NAME="TestCreateAccountAPI/InvalidCurrency in SimpleBank/api Coverage Results" MODIFIED="1657608980966" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SimpleBank$go_test_SimpleBank_db_sqlc.out" NAME="go test SimpleBank/db/sqlc Coverage Results" MODIFIED="1657718687680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SimpleBank$TestCreateTransferAPI_in_SimpleBank_api.out" NAME="TestCreateTransferAPI in SimpleBank/api Coverage Results" MODIFIED="1657634440142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/SimpleBank$TestNewBusinessAPI_WithdrawOK_in_SimpleBank_api.out" NAME="TestNewBusinessAPI/WithdrawOK in SimpleBank/api Coverage Results" MODIFIED="1657770057689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
