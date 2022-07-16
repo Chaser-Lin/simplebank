@@ -1,7 +1,7 @@
 package db
 
 import (
-	"SimpleBank/db/util"
+	"SimpleBank/util"
 	"context"
 	_ "database/sql"
 	"github.com/stretchr/testify/require"

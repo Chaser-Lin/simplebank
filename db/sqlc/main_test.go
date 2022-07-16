@@ -1,7 +1,7 @@
 package db
 
 import (
-	"SimpleBank/db/util"
+	"SimpleBank/util"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"

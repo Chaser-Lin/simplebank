@@ -3,8 +3,8 @@ package api
 import (
 	mockdb "SimpleBank/db/mock"
 	db "SimpleBank/db/sqlc"
-	"SimpleBank/db/util"
 	"SimpleBank/token"
+	"SimpleBank/util"
 	"bytes"
 	"database/sql"
 	"encoding/json"

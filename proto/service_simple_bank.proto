@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package pb;
+
+import "rpc_create_user.proto";
+import "rpc_login_user.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "SimpleBank/pb";
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "SimpleBank";
+    version: "1.0";
+    contact: {
+      name: "Chaser-Lin";
+      url: "https://github.com/Chaser-Lin/simplebank";
+      email: "2858956907@qq.com";
+    };
+  };
+};
+
+service SimpleBank {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/v1/create_user"
+      body: "*"
+    };
+  }
+  rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {
+    option (google.api.http) = {
+      post: "/v1/login_user"
+      body: "*"
+    };
+  }
+}

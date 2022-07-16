@@ -3,7 +3,7 @@ package api
 import (
 	mockdb "SimpleBank/db/mock"
 	db "SimpleBank/db/sqlc"
-	"SimpleBank/db/util"
+	util2 "SimpleBank/util"
 	"bytes"
 	"database/sql"
 	"encoding/json"
@@ -30,7 +30,7 @@ func (e eqCreateUserParmsMatcher) Matches(x interface{}) bool {
 	if !ok {
 		return false
 	}
-	err := util.CheckPassword(arg.HashedPassword, e.password)
+	err := util2.CheckPassword(arg.HashedPassword, e.password)
 	if err != nil {
 		return false
 	}
@@ -49,7 +49,7 @@ func EqCreateUserParms(arg db.CreateUserParams, password string) gomock.Matcher 
 
 func TestCreateUserAPI(t *testing.T) {
 	user, password := randomUser(t)
-	hashedPassword, err := util.HashPassword(password)
+	hashedPassword, err := util2.HashPassword(password)
 	require.NoError(t, err)
 
 	testCases := []struct {
@@ -370,6 +370,12 @@ func TestLoginUserAPI(t *testing.T) {
 					GetUser(gomock.Any(), gomock.Eq(user.Username)).
 					Times(1).
 					Return(user, nil)
+				store.EXPECT().
+					CreateSession(gomock.Any(), gomock.Any()).
+					Times(1)
+				store.EXPECT().
+					GetSession(gomock.Any(), gomock.Any()).
+					Times(1)
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusOK, recorder.Code)
@@ -401,7 +407,7 @@ func TestLoginUserAPI(t *testing.T) {
 					GetUser(gomock.Any(), gomock.Eq(user.Username)).
 					Times(1).
 					Return(user, nil)
-				err := util.CheckPassword(user.HashedPassword, "wrong-password")
+				err := util2.CheckPassword(user.HashedPassword, "wrong-password")
 				require.Error(t, err)
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
@@ -419,7 +425,7 @@ func TestLoginUserAPI(t *testing.T) {
 					GetUser(gomock.Any(), gomock.Eq(user.Username)).
 					Times(1).
 					Return(user, nil)
-				err := util.CheckPassword(user.HashedPassword, "wrong-password")
+				err := util2.CheckPassword(user.HashedPassword, "wrong-password")
 				require.Error(t, err)
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
@@ -484,14 +490,14 @@ func TestLoginUserAPI(t *testing.T) {
 }
 
 func randomUser(t *testing.T) (db.User, string) {
-	password := util.RandomString(6)
-	hashedPassword, err := util.HashPassword(password)
+	password := util2.RandomString(6)
+	hashedPassword, err := util2.HashPassword(password)
 	require.NoError(t, err)
 	return db.User{
-		Username:       util.RandomOwner(),
+		Username:       util2.RandomOwner(),
 		HashedPassword: hashedPassword,
-		Email:          util.RandomEmail(),
-		FullName:       util.RandomOwner(),
+		Email:          util2.RandomEmail(),
+		FullName:       util2.RandomOwner(),
 	}, password
 }
 

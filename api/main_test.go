@@ -2,7 +2,7 @@ package api
 
 import (
 	db "SimpleBank/db/sqlc"
-	"SimpleBank/db/util"
+	util2 "SimpleBank/util"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/stretchr/testify/require"
@@ -17,8 +17,8 @@ const (
 )
 
 func NewTestServer(t *testing.T, store db.Store) *Server {
-	config := util.Config{
-		TokenSymmetricKey:   util.RandomString(32),
+	config := util2.Config{
+		TokenSymmetricKey:   util2.RandomString(32),
 		AccessTokenDuration: time.Minute,
 	}
 

@@ -2,8 +2,8 @@ package api
 
 import (
 	db "SimpleBank/db/sqlc"
-	"SimpleBank/db/util"
 	"SimpleBank/token"
+	"SimpleBank/util"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
@@ -45,6 +45,7 @@ func (server *Server) setupRouter() {
 	router.POST("/users", server.createUser)
 	router.GET("/users/:username", server.getUser)
 	router.POST("/users/login", server.loginUser)
+	router.POST("/tokens/renew_access", server.renewAccessToken)
 
 	authRoutes := router.Group("/").Use(authMiddleware(server.tokenMaker))
 	{
